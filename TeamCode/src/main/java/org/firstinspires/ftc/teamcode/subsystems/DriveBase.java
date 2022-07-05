@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import static org.firstinspires.ftc.teamcode.Constants.MOTOR;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -14,7 +15,7 @@ public class DriveBase {
     private Telemetry telemetry;
     private HardwareMap hardwareMap;
 
-    public DriveBase(OpMode opMode){
+    public DriveBase(OpMode opMode) {
         this.telemetry = opMode.telemetry;
         this.hardwareMap = opMode.hardwareMap;
     }
@@ -31,21 +32,25 @@ public class DriveBase {
         leftFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void drive(double rms, double rfs, double lms, double lfs){
-        rightMaster.setPower(rms);
-        rightFollow.setPower(rfs);
-        leftMaster.setPower(lms);
-        leftFollow.setPower(lfs);
+    public void drive(double rightMasterSpeed, double rightFollowerSpeed, double leftMasterSpeed, double leftFollowerSpeed) {
+        rightMaster.setPower(rightMasterSpeed);
+        rightFollow.setPower(rightFollowerSpeed);
+        leftMaster.setPower(leftMasterSpeed);
+        leftFollow.setPower(leftFollowerSpeed);
 
-        telemetry.addData("rightMaster, rightFollow, leftMaster, leftFollow", "%.1 %.1 %.1 %.1", rms, rfs, lms, lfs);
+        telemetry.addData("rightMaster, rightFollow, leftMaster, leftFollow", "%.1 %.1 %.1 %.1", rightMasterSpeed, rightFollowerSpeed, leftMasterSpeed, leftFollowerSpeed);
     }
 
-    private void calculatePower(double x, double y, double r){
-        double lfp = y + x + r;
-        double lbp = y - x + r;
-        double rfp = y - x - r;
-        double rbp = y + x - r;
+    public void driveController(double left, double right) {
+        drive(right, right, left, left);
+    }
 
-        drive(lfp, lbp, rfp, rbp);
+    private void calculatePower(double x, double y, double r) {
+        double leftFrontPower = y + x + r;
+        double leftBackPower = y - x + r;
+        double rightFrontPower = y - x - r;
+        double rightBackPower = y + x - r;
+
+        drive(leftFrontPower, leftBackPower, rightFrontPower, rightBackPower);
     }
 }
