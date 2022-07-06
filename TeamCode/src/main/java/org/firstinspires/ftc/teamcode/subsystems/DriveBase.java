@@ -11,48 +11,56 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DriveBase {
-    private DcMotor rightMaster, rightFollow, leftMaster, leftFollow;
+   private DcMotor rightMaster, rightFollow, leftMaster, leftFollow;
 
-    private Telemetry telemetry;
-    private HardwareMap hardwareMap;
+   private Telemetry telemetry;
+   private HardwareMap hardwareMap;
 
-    public DriveBase(OpMode opMode) {
-        this.telemetry = opMode.telemetry;
-        this.hardwareMap = opMode.hardwareMap;
-    }
+   public DriveBase(OpMode opMode) {
+       this.telemetry = opMode.telemetry;
+       this.hardwareMap = opMode.hardwareMap;
+   }
 
-    public void init() {
+   public void init() {
 
-        rightMaster = hardwareMap.dcMotor.get("rm");
-        rightFollow = hardwareMap.dcMotor.get("rf");
-        leftMaster = hardwareMap.dcMotor.get( "lm");
-        leftFollow = hardwareMap.dcMotor.get( "lf");
+       rightMaster = hardwareMap.dcMotor.get("rm");
+       rightFollow = hardwareMap.dcMotor.get("rf");
+       leftMaster = hardwareMap.dcMotor.get( "lm");
+       leftFollow = hardwareMap.dcMotor.get( "lf");
 
-        rightMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       rightMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       rightFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       leftMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       leftFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        rightFollow.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightMaster.setDirection(DcMotorSimple.Direction.REVERSE);
-    }
+       rightFollow.setDirection(DcMotorSimple.Direction.REVERSE);
+       rightMaster.setDirection(DcMotorSimple.Direction.REVERSE);
+   }
 
-    public void driveAll(double rightMasterSpeed, double rightFollowerSpeed, double leftMasterSpeed, double leftFollowerSpeed) {
-        rightMaster.setPower(rightMasterSpeed);
-        rightFollow.setPower(rightFollowerSpeed);
-        leftMaster.setPower(leftMasterSpeed);
-        leftFollow.setPower(leftFollowerSpeed);
+   public void driveAll(double rightMasterSpeed, double rightFollowerSpeed, double leftMasterSpeed, double leftFollowerSpeed) {
+       rightMaster.setPower(rightMasterSpeed);
+       rightFollow.setPower(rightFollowerSpeed);
+       leftMaster.setPower(leftMasterSpeed);
+       leftFollow.setPower(leftFollowerSpeed);
 
-        //telemetry.addData("rightMaster, rightFollow, leftMaster, leftFollow", "%.1 %.1 %.1 %.1", rightMasterSpeed, rightFollowerSpeed, leftMasterSpeed, leftFollowerSpeed);
-    }
+       //telemetry.addData("rightMaster, rightFollow, leftMaster, leftFollow", "%.1 %.1 %.1 %.1", rightMasterSpeed, rightFollowerSpeed, leftMasterSpeed, leftFollowerSpeed);
+   }
 
-    public void drive(double left, double right) {
-        driveAll(right, right, left, left);
-    }
+   public void drive(double left, double right, boolean boost) {
+       if(boost){
+           driveAll(right, right, left, left);
+       } else {
+           driveAll(right*0.8, right*0.8, left*0.8, left*0.8);
+       }
 
-    public void driveArcade(double forwardPower, double turnPower){
-       double L = (2*forwardPower-turnPower* MOTOR.d)/2;
-       double R = turnPower*MOTOR.d+forwardPower;
-       drive(L,R);
-    }
+   }
+
+   public void driveArcade(double forwardPower, double turnPower, boolean boost){
+      double L = (2*forwardPower-turnPower* MOTOR.d)/2;
+      double R = turnPower*MOTOR.d+forwardPower;
+
+      drive(L,R,boost);
+
+   }
 }
+
