@@ -7,11 +7,12 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import static org.firstinspires.ftc.teamcode.Constants.*;
+import static org.firstinspires.ftc.teamcode.Constants.AUTONOMOUS.*;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DriveBase {
-   private DcMotor rightMaster, rightFollow, leftMaster, leftFollow;
+   public DcMotor rightMaster, rightFollow, leftMaster, leftFollow;
 
    private Telemetry telemetry;
    private HardwareMap hardwareMap;
@@ -35,6 +36,7 @@ public class DriveBase {
 
        rightFollow.setDirection(DcMotorSimple.Direction.REVERSE);
        rightMaster.setDirection(DcMotorSimple.Direction.REVERSE);
+
    }
 
    public void driveAll(double rightMasterSpeed, double rightFollowerSpeed, double leftMasterSpeed, double leftFollowerSpeed) {
@@ -62,5 +64,34 @@ public class DriveBase {
       drive(L,R,boost);
 
    }
+
+    public void driveDistance(double distanceToDrive, double powerToDrive){
+
+       leftMaster.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       rightMaster.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       leftFollow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       rightFollow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+       leftMaster.setTargetPosition((int)(distanceToDrive*ticksPerMeter));
+       rightMaster.setTargetPosition((int)(distanceToDrive*ticksPerMeter));
+       leftFollow.setTargetPosition((int)(distanceToDrive*ticksPerMeter));
+       rightFollow.setTargetPosition((int)(distanceToDrive*ticksPerMeter));
+
+       leftMaster.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       leftFollow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       rightMaster.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       rightFollow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+       leftMaster.setPower(powerToDrive);
+       leftFollow.setPower(powerToDrive);
+       rightMaster.setPower(powerToDrive);
+       rightFollow.setPower(powerToDrive);
+
+
+    }
+    public boolean isBusy(){
+       return leftFollow.isBusy() || leftMaster.isBusy() || rightFollow.isBusy() || rightMaster.getPowerFloat();
+    }
+
 }
 

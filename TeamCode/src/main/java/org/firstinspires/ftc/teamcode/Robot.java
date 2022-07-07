@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Path;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -12,19 +14,37 @@ enum DriveState{
 }
 
 public class Robot {
-   private final Gamepad controller;
+   private Gamepad controller;
    private final DriveBase driveBase;
-   private final Telemetry telemetry;
+   private Telemetry telemetry;
    private DriveState driveState = DriveState.Arcade;
+   private static Robot instance;
 
-   private final double maxspeed = 0.8;
 
-   public Robot(OpMode opMode) {
-       controller = opMode.gamepad1;
+   private Robot(OpMode opMode) {
+       setup(opMode);
 
-       telemetry = opMode.telemetry;
 
        driveBase = new DriveBase(opMode);
+   }
+
+    public static Robot getInstance(OpMode opMode) {
+        if(instance == null){
+            instance = new Robot(opMode);
+
+        }
+        instance.setup(opMode);
+        return instance;
+    }
+
+    public void setup(OpMode opMode){
+       controller = opMode.gamepad1;
+       telemetry = opMode.telemetry;
+    }
+
+    public void auto() {
+       driveBase.driveDistance(1, 0.3);
+       while(driveBase.isBusy());
    }
 
    public void init() {
@@ -47,7 +67,7 @@ public class Robot {
 
        switch (driveState){
            case TankDrive:
-                   driveBase.drive(controller.left_stick_y, controller.right_stick_y, controller.left_bumper);
+               driveBase.drive(controller.left_stick_y, controller.right_stick_y, controller.left_bumper);
                break;
 
            case Arcade:
