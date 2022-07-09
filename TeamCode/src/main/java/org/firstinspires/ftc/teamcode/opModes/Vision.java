@@ -37,7 +37,8 @@ public class Vision extends LinearOpMode {
             tfod.setZoom(2.5, 16.0/9.0);
         }
 
-        /** Wait for the game to begin */
+/** Wait for the game to begin*/
+
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
         waitForStart();
@@ -81,11 +82,12 @@ public class Vision extends LinearOpMode {
 
     /**
      * Initialize the Vuforia localization engine.
-     */
+    */
+
     private void initVuforia() {
-        /*
-         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
-         */
+         /** Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.*/
+
+
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
@@ -99,7 +101,8 @@ public class Vision extends LinearOpMode {
 
     /**
      * Initialize the TensorFlow Object Detection engine.
-     */
+    */
+
     private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
