@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.DriveBase;
+import org.firstinspires.ftc.teamcode.vision.GreenObjectDetector;
+import org.firstinspires.ftc.teamcode.vision.VisionOpenCV;
 
 enum DriveState{
    Arcade,
@@ -15,6 +17,8 @@ public class Robot {
    private final Gamepad controller;
    private final DriveBase driveBase;
    private final Telemetry telemetry;
+   private VisionOpenCV visionOpenCV;
+   private GreenObjectDetector detector = new GreenObjectDetector();
    private DriveState driveState = DriveState.Arcade;
 
    private final double maxspeed = 0.8;
@@ -25,6 +29,10 @@ public class Robot {
        telemetry = opMode.telemetry;
 
        driveBase = new DriveBase(opMode);
+
+       visionOpenCV = new VisionOpenCV(opMode);
+
+       visionOpenCV.attachPipeline(detector);
    }
 
    public void init() {
@@ -54,6 +62,8 @@ public class Robot {
                driveBase.driveArcade(controller.left_stick_y, -controller.right_stick_x, controller.left_bumper);
                break;
        }
+
+       visionOpenCV.streamWebcam();
 
    }
 }
