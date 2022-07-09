@@ -22,7 +22,6 @@ public class Arm {
         turretMotor = hardwareMap.dcMotor.get(ARM.TURRET_MOTOR_ID);
         armMotor = hardwareMap.dcMotor.get(ARM.ROTATE_MOTOR_ID);
         clawMotor = hardwareMap.dcMotor.get(ARM.CLAW_MOTOR_ID);
-        telemetry.addData("Quang is handsome", armMotor.getPortNumber());
 
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -46,7 +45,7 @@ public class Arm {
     }
 
     public int getArmPosition(){
-        telemetry.addData("Motor Position:", armMotor.getCurrentPosition());
+        telemetry.addData("Motor Position:", armMotor.getCurrentPosition()* ARM.TICKS_TO_DEGREE);
         return armMotor.getCurrentPosition();
     }
 

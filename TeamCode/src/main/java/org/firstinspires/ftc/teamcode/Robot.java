@@ -9,7 +9,7 @@ import static org.firstinspires.ftc.teamcode.Constants.ARM;
 public class Robot {
     private Arm arm;
     private Gamepad FuntionalityGamepad;
-    private int threshold;
+    private int threshold = -125;
 
     private enum TurretState {
         LEFT,

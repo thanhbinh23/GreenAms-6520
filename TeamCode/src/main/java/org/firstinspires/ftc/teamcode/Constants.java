@@ -15,6 +15,6 @@ public class Constants {
         public static final double CLAW_OPEN = 0.5;
         public static final double CLAW_CLOSE = -0.5;
 
-        public static final double TICKS_TO_DEGREE = 10;
+        public static final double TICKS_TO_DEGREE = 864.0/364;
     }
 }
