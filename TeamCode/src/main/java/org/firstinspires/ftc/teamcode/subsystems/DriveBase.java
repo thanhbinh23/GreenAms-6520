@@ -55,12 +55,21 @@ public class DriveBase {
 
    }
 
-   public void driveArcade(double forwardPower, double turnPower, boolean boost){
-      double L = (2*forwardPower-turnPower* MOTOR.d)/2;
-      double R = turnPower*MOTOR.d+forwardPower;
+    public void drive(double left, double right) {
+        drive(left, right, true);
+    }
 
-      drive(L,R,boost);
+    //the amount of power to each motor when joystick is fully to one side
+    public static final double turnGoal = 0.3;
+    public static final double forwardGoal = 0.7;
+    public void driveArcade(double forwardPower, double turnPower){
+       double turnPart = turnPower*turnGoal;
+       double forwardPart = forwardPower*forwardGoal;
+       double L = forwardPart - turnPart;
+       double R = forwardPart + turnPart;                     
+       drive(L,R);
 
-   }
+    }
+
 }
 
