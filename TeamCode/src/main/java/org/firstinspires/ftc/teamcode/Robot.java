@@ -23,6 +23,6 @@ public class Robot {
     }
 
     public void teleop() {
-        arm.moveArm(gamepad.left_bumper, gamepad.right_bumper, gamepad.square);
+        arm.moveArm(gamepad.left_bumper, gamepad.right_bumper, gamepad.triangle, gamepad.square, gamepad.circle);
     }
 }
