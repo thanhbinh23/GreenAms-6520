@@ -4,14 +4,33 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import static org.firstinspires.ftc.teamcode.Constants.ARM;
 
 public class Robot {
     private Arm arm;
     private Gamepad gamepad;
 
-    public enum TurretState {
-        REACHED, NOT_REACHED
+    private enum TurretState {
+        LEFT,
+        RIGHT,
+        STATIONARY,
     }
+
+    private enum ArmState {
+        UP,
+        DOWN,
+        HOLD
+    }
+
+    private enum ClawState {
+        OPEN,
+        CLOSE,
+        HOLD
+    }
+
+    private TurretState turretState;
+    private ArmState armState;
+    private ClawState clawState;
 
     public Robot(OpMode opmode) {
         arm = new Arm(opmode);
@@ -23,6 +42,65 @@ public class Robot {
     }
 
     public void teleop() {
-        arm.moveArm(gamepad.left_bumper, gamepad.right_bumper, gamepad.triangle, gamepad.square, gamepad.circle);
+
+        if(gamepad.dpad_left){
+            turretState = TurretState.LEFT;
+        } else if (gamepad.dpad_right){
+            turretState = TurretState.RIGHT;
+        } else {
+            turretState = TurretState.STATIONARY;
+        }
+
+        if(gamepad.dpad_down){
+            armState = ArmState.DOWN;
+        } else if (gamepad.dpad_up) {
+            armState = ArmState.UP;
+        } else {
+            armState = ArmState.HOLD;
+        }
+
+        if(gamepad.square){
+            clawState = ClawState.OPEN;
+        } else if (gamepad.circle) {
+            clawState = clawState.CLOSE;
+        } else {
+            clawState = clawState.HOLD;
+        }
+
+        switch(turretState){
+            case LEFT:
+                arm.setTurretMotor(ARM.TURRET_MOVE_LEFT);
+                break;
+            case RIGHT:
+                arm.setTurretMotor(ARM.TURRET_MOVE_RIGHT);
+                break;
+            case STATIONARY:
+                arm.setArmMotor(0);
+                break;
+        }
+
+        switch (armState){
+            case UP:
+                arm.setArmMotor(ARM.ARM_MOVE_UP);
+                break;
+            case DOWN:
+                arm.setArmMotor(ARM.ARM_MOVE_DOWN);
+                break;
+            case HOLD:
+                arm.setArmMotor(0);
+                break;
+        }
+
+        switch (clawState) {
+            case OPEN:
+                arm.setClawMotor(ARM.CLAW_OPEN);
+                break;
+            case CLOSE:
+                arm.setClawMotor(ARM.CLAW_CLOSE);
+                break;
+            case HOLD:
+                arm.setClawMotor(0);
+                break;
+        }
     }
 }
