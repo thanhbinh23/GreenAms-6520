@@ -8,18 +8,20 @@ import static org.firstinspires.ftc.teamcode.Constants.ARM;
 
 public class Robot {
     private Arm arm;
-    private Gamepad gamepad;
+    private Gamepad FuntionalityGamepad;
+    private int threshold;
 
     private enum TurretState {
         LEFT,
         RIGHT,
-        STATIONARY,
+        STATIONARY
     }
 
     private enum ArmState {
         UP,
         DOWN,
-        HOLD
+        HOLD,
+        LEAVE_OTHER_SIDE
     }
 
     private enum ClawState {
@@ -34,7 +36,7 @@ public class Robot {
 
     public Robot(OpMode opmode) {
         arm = new Arm(opmode);
-        gamepad = opmode.gamepad1;
+        FuntionalityGamepad = opmode.gamepad1;
     }
 
     public void init() {
@@ -43,25 +45,29 @@ public class Robot {
 
     public void teleop() {
 
-        if(gamepad.dpad_left){
+        if(FuntionalityGamepad.dpad_left){
             turretState = TurretState.LEFT;
-        } else if (gamepad.dpad_right){
+        } else if (FuntionalityGamepad.dpad_right){
             turretState = TurretState.RIGHT;
         } else {
             turretState = TurretState.STATIONARY;
         }
 
-        if(gamepad.dpad_down){
-            armState = ArmState.DOWN;
-        } else if (gamepad.dpad_up) {
+        if(FuntionalityGamepad.dpad_down){
+            if (arm.getArmPosition()*ARM.TICKS_TO_DEGREE < threshold){
+                armState = ArmState.DOWN;
+            } else {
+                armState = ArmState.LEAVE_OTHER_SIDE;
+            }
+        } else if (FuntionalityGamepad.dpad_up) {
             armState = ArmState.UP;
         } else {
             armState = ArmState.HOLD;
         }
 
-        if(gamepad.square){
+        if(FuntionalityGamepad.square){
             clawState = ClawState.OPEN;
-        } else if (gamepad.circle) {
+        } else if (FuntionalityGamepad.circle) {
             clawState = clawState.CLOSE;
         } else {
             clawState = clawState.HOLD;
@@ -75,7 +81,7 @@ public class Robot {
                 arm.setTurretMotor(ARM.TURRET_MOVE_RIGHT);
                 break;
             case STATIONARY:
-                arm.setArmMotor(0);
+                arm.setTurretMotor(0);
                 break;
         }
 
@@ -87,7 +93,10 @@ public class Robot {
                 arm.setArmMotor(ARM.ARM_MOVE_DOWN);
                 break;
             case HOLD:
-                arm.setArmMotor(0);
+                arm.setArmMotor(-0.3);
+                break;
+            case LEAVE_OTHER_SIDE:
+                arm.setArmMotor(1);
                 break;
         }
 

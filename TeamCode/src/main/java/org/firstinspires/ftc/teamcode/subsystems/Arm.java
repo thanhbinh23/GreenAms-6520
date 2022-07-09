@@ -6,18 +6,23 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Arm {
     private HardwareMap hardwareMap;
+    private Telemetry telemetry;
     private DcMotor turretMotor, armMotor, clawMotor;
 
-    public Arm(OpMode opmode) {
-        this.hardwareMap = opmode.hardwareMap;
+    public Arm(OpMode opMode) {
+        this.telemetry = opMode.telemetry;
+        this.hardwareMap = opMode.hardwareMap;
     }
 
     public void initArm() {
         turretMotor = hardwareMap.dcMotor.get(ARM.TURRET_MOTOR_ID);
         armMotor = hardwareMap.dcMotor.get(ARM.ROTATE_MOTOR_ID);
         clawMotor = hardwareMap.dcMotor.get(ARM.CLAW_MOTOR_ID);
+        telemetry.addData("Quang is handsome", armMotor.getPortNumber());
 
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -33,7 +38,6 @@ public class Arm {
     }
 
     public void setArmMotor(double ArmSpeed){
-        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armMotor.setPower(ArmSpeed);
     }
 
@@ -41,10 +45,9 @@ public class Arm {
         clawMotor.setPower(clawSpeed);
     }
 
-//    public void holdArmMotor(){
-//        int armPosition = armMotor.getCurrentPosition();
-//        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        armMotor.setTargetPosition((int) armPosition);
-//
-//    }
+    public int getArmPosition(){
+        telemetry.addData("Motor Position:", armMotor.getCurrentPosition());
+        return armMotor.getCurrentPosition();
+    }
+
 }
