@@ -7,7 +7,7 @@ public class Constants {
         public static final String LEFTMASTER = "lm";
         public static final String LEFTFOLLOW = "lf";
 
-        public static final double d = 10;
+        public static final double d = 0.33;
     }
     public static final class AUTONOMOUS{
         public static final double wheelDiameter = 0.09;

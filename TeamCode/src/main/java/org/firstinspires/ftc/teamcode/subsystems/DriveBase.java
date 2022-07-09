@@ -89,6 +89,31 @@ public class DriveBase {
 
 
     }
+
+    public void turnDistance(double angleToTurn, double powerToDrive){
+       double distancetoDrive = angleToTurn*MOTOR.d/2;
+
+       leftMaster.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       leftFollow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       rightMaster.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       rightFollow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+       leftMaster.setTargetPosition((int)(distancetoDrive*ticksPerMeter));
+       leftFollow.setTargetPosition((int)(distancetoDrive*ticksPerMeter));
+       rightMaster.setTargetPosition((int)(-distancetoDrive*ticksPerMeter));
+       rightFollow.setTargetPosition((int)(-distancetoDrive*ticksPerMeter));
+
+        leftMaster.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFollow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMaster.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFollow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftMaster.setPower(powerToDrive);
+        leftFollow.setPower(powerToDrive);
+        rightMaster.setPower(-powerToDrive);
+        rightFollow.setPower(-powerToDrive);
+
+    }
     public boolean isBusy(){
        return leftFollow.isBusy() || leftMaster.isBusy() || rightFollow.isBusy() || rightMaster.getPowerFloat();
     }
