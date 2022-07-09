@@ -87,6 +87,8 @@ public class DriveBase {
        rightMaster.setPower(powerToDrive);
        rightFollow.setPower(powerToDrive);
 
+       while(isBusy());
+
 
     }
 
@@ -112,6 +114,8 @@ public class DriveBase {
         leftFollow.setPower(powerToDrive);
         rightMaster.setPower(-powerToDrive);
         rightFollow.setPower(-powerToDrive);
+
+        while(isBusy());
 
     }
     public boolean isBusy(){

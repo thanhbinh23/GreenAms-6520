@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.graphics.Path;
+//import android.graphics.Path;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -43,8 +43,13 @@ public class Robot {
     }
 
     public void auto() {
-       driveBase.driveDistance(1, 0.3);
-       while(driveBase.isBusy());
+       driveBase.driveDistance(0.3, 0.5);
+       driveBase.turnDistance(56.4,-0.5);
+       driveBase.driveDistance(Math.sqrt(40*40+60*60),0.5);
+       driveBase.turnDistance(180,0.5);
+       driveBase.driveDistance(Math.sqrt(40*40+60*60),0.5);
+       driveBase.turnDistance(56.4,-0.5);
+       driveBase.driveDistance(1.2,0.8);
    }
 
    public void init() {
@@ -76,5 +81,7 @@ public class Robot {
        }
 
    }
+
+
 }
 

@@ -14,4 +14,6 @@ public class Constants {
         public static final double ticksPerMeter = 336/(Math.PI* wheelDiameter);
 
     }
+
+//    public static final double angularVelocity = 2;
 }
