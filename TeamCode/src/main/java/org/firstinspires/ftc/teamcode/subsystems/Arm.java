@@ -1,12 +1,14 @@
+
+
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.Constants.ARM;
+        import static org.firstinspires.ftc.teamcode.Constants.ARM;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+        import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Arm {
     private HardwareMap hardwareMap;
@@ -27,5 +29,27 @@ public class Arm {
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         clawMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        turretMotor.setPower(0);
+        armMotor.setPower(0);
+        clawMotor.setPower(0);
     }
+
+    public void setTurretMotor(double turretSpeed) {
+        turretMotor.setPower(turretSpeed);
+    }
+
+    public void setArmMotor(double ArmSpeed){
+        armMotor.setPower(ArmSpeed);
+    }
+
+    public void setClawMotor(double clawSpeed){
+        clawMotor.setPower(clawSpeed);
+    }
+
+    public int getArmPosition(){
+        telemetry.addData("Motor Position:", armMotor.getCurrentPosition()* ARM.TICKS_TO_DEGREE);
+        return armMotor.getCurrentPosition();
+    }
+
 }
+
