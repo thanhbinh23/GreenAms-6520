@@ -8,7 +8,7 @@ import static org.firstinspires.ftc.teamcode.Constants.ARM;
 
 public class Robot {
     private Arm arm;
-    private Gamepad FuntionalityGamepad;
+    private Gamepad gamepad;
     private int threshold = -125;
 
     private enum TurretState {
@@ -36,7 +36,7 @@ public class Robot {
 
     public Robot(OpMode opmode) {
         arm = new Arm(opmode);
-        FuntionalityGamepad = opmode.gamepad1;
+        gamepad = opmode.gamepad1;
     }
 
     public void init() {
@@ -45,29 +45,29 @@ public class Robot {
 
     public void teleop() {
 
-        if(FuntionalityGamepad.dpad_left){
+        if(gamepad.dpad_left){
             turretState = TurretState.LEFT;
-        } else if (FuntionalityGamepad.dpad_right){
+        } else if (gamepad.dpad_right){
             turretState = TurretState.RIGHT;
         } else {
             turretState = TurretState.STATIONARY;
         }
 
-        if(FuntionalityGamepad.dpad_down){
+        if(gamepad.dpad_down){
             if (arm.getArmPosition()*ARM.TICKS_TO_DEGREE < threshold){
                 armState = ArmState.DOWN;
             } else {
                 armState = ArmState.LEAVE_OTHER_SIDE;
             }
-        } else if (FuntionalityGamepad.dpad_up) {
+        } else if (gamepad.dpad_up) {
             armState = ArmState.UP;
         } else {
             armState = ArmState.HOLD;
         }
 
-        if(FuntionalityGamepad.square){
+        if(gamepad.square){
             clawState = ClawState.OPEN;
-        } else if (FuntionalityGamepad.circle) {
+        } else if (gamepad.circle) {
             clawState = clawState.CLOSE;
         } else {
             clawState = clawState.HOLD;
