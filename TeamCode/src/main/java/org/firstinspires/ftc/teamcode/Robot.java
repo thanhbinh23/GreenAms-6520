@@ -96,10 +96,10 @@ public class Robot {
         }
 
         if(gamepad.dpad_down){
-            if (arm.getArmPosition()*ARM.TICKS_TO_DEGREE < threshold){
-                armState = ArmState.DOWN;
-            } else {
+            if (gamepad.right_bumper){
                 armState = ArmState.LEAVE_OTHER_SIDE;
+            } else {
+                armState = ArmState.DOWN;
             }
         } else if (gamepad.dpad_up) {
             armState = ArmState.UP;
