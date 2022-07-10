@@ -25,4 +25,8 @@ public class Constants {
 
         public static final double TICKS_TO_DEGREE = 864.0/364;
     }
+
+    public static final class SPINNER {
+        public static final String SPINNER_ID = "Spinner";
+    }
 }

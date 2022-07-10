@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.subsystems.DriveBase;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 
 import org.firstinspires.ftc.teamcode.Constants.ARM;
+import org.firstinspires.ftc.teamcode.subsystems.Spinner;
 
 enum DriveState{
    Arcade,
@@ -33,27 +34,35 @@ enum ClawState {
     HOLD
 }
 
-public class Robot {
-   private final Gamepad controller;
-   private final DriveBase driveBase;
-   private final Telemetry telemetry;
-   private DriveState driveState = DriveState.Arcade;
+enum SpinnerState {
+    SPIN_LEFT,
+    SPIN_RIGHT,
+    SPIN_IDLE
+}
 
-   private final double maxspeed = 0.8;
+public class Robot {
+   private final Gamepad controller, gamepad;
+   private final Telemetry telemetry;
+
+   private final DriveBase driveBase;
+   private final Spinner spinner;
    private Arm arm;
-   private Gamepad gamepad;
+
    private int threshold = -125;
 
    private TurretState turretState;
    private ArmState armState;
    private ClawState clawState;
+   private SpinnerState spinnerState;
+   private DriveState driveState = DriveState.Arcade;
 
-   public Robot(OpMode opMode) {
+    public Robot(OpMode opMode) {
        controller = opMode.gamepad1;
        gamepad = opMode.gamepad2;
 
        arm = new Arm(opMode);
        driveBase = new DriveBase(opMode);
+       spinner = new Spinner(opMode);
 
        telemetry = opMode.telemetry;
    }
@@ -61,10 +70,11 @@ public class Robot {
    public void init() {
        driveBase.init();
        arm.initArm();
+       spinner.init();
    }
 
    public void start() {
-
+        telemetry.addData("GART", 99999);
    }
 
    public void teleop() {
@@ -103,6 +113,14 @@ public class Robot {
             clawState = clawState.CLOSE;
         } else {
             clawState = clawState.HOLD;
+        }
+
+        if(gamepad.right_trigger != 0){
+            spinnerState = SpinnerState.SPIN_RIGHT;
+        } else if (gamepad.left_trigger != 0) {
+            spinnerState = SpinnerState.SPIN_LEFT;
+        } else {
+            spinnerState = SpinnerState.SPIN_IDLE;
         }
 
        switch (driveState){
@@ -152,7 +170,19 @@ public class Robot {
             case HOLD:
                 arm.setClawMotor(0);
                 break;
-    }
+        }
+
+        switch (spinnerState){
+            case SPIN_RIGHT:
+                spinner.spin(gamepad.left_trigger);
+                break;
+            case SPIN_LEFT:
+                spinner.spin(gamepad.right_trigger);
+                break;
+            case SPIN_IDLE:
+                spinner.spin(0);
+                break;
+        }
 
    }
 }
