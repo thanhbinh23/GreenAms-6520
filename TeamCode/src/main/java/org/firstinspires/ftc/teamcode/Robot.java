@@ -41,8 +41,8 @@ enum SpinnerState {
 }
 
 public class Robot {
-    private final Gamepad controller, gamepad;
-    private final Telemetry telemetry;
+    private  Gamepad controller, gamepad;
+    private  Telemetry telemetry;
 
     private final DriveBase driveBase;
     private final Spinner spinner;
@@ -55,6 +55,7 @@ public class Robot {
     private ClawState clawState;
     private SpinnerState spinnerState;
     private DriveState driveState = DriveState.Arcade;
+    private static Robot instance;
 
     public Robot(OpMode opMode) {
         controller = opMode.gamepad1;
@@ -66,6 +67,16 @@ public class Robot {
 
         telemetry = opMode.telemetry;
     }
+
+    public static Robot getInstance(OpMode opMode) {
+        if(instance == null){
+            instance = new Robot(opMode);}
+        instance.setup(opMode);
+        return instance;
+    }
+    public void setup(OpMode opMode){
+        controller = opMode.gamepad1;
+        telemetry = opMode.telemetry;}
 
     public void init() {
         driveBase.init();
