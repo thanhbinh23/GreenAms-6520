@@ -15,7 +15,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
         import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DriveBase {
-    private DcMotor rightMaster, rightFollow, leftMaster, leftFollow;
+    private DcMotorEx rightMaster, rightFollow, leftMaster, leftFollow;
 
     private Telemetry telemetry;
     private HardwareMap hardwareMap;
@@ -27,10 +27,10 @@ public class DriveBase {
 
     public void init() {
 
-        rightMaster = hardwareMap.dcMotor.get("rm");
-        rightFollow = hardwareMap.dcMotor.get("rf");
-        leftMaster = hardwareMap.dcMotor.get( "lm");
-        leftFollow = hardwareMap.dcMotor.get( "lf");
+        rightMaster = (DcMotorEx) hardwareMap.dcMotor.get("rm");
+        rightFollow = (DcMotorEx) hardwareMap.dcMotor.get("rf");
+        leftMaster = (DcMotorEx) hardwareMap.dcMotor.get( "lm");
+        leftFollow = (DcMotorEx) hardwareMap.dcMotor.get( "lf");
 
         rightMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -39,6 +39,11 @@ public class DriveBase {
 
         rightFollow.setDirection(DcMotorSimple.Direction.REVERSE);
         rightMaster.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        rightMaster.setTargetPositionTolerance((int) (0.025*ticksPerMeter));
+        leftFollow.setTargetPositionTolerance((int) (0.025*ticksPerMeter));
+        rightFollow.setTargetPositionTolerance((int) (0.025*ticksPerMeter));
+        leftMaster.setTargetPositionTolerance((int) (0.025*ticksPerMeter));
     }
 
     public void driveAll(double rightMasterSpeed, double rightFollowerSpeed, double leftMasterSpeed, double leftFollowerSpeed) {

@@ -90,12 +90,12 @@ public class Robot {
 
     public void auto1() {
         driveBase.driveDistance(0.2, 0.5);
-        driveBase.turnDistance(0.98,-0.2);
+        driveBase.turnDistance(-0.98,0.4);
         driveBase.driveDistance(0.4,0.5);
-        driveBase.turnDistance(Math.PI,0.2);
-        driveBase.driveDistance(0.35,0.5);
-        driveBase.turnDistance(0.98,-0.2);
-        driveBase.driveDistance(1.2,0.8);
+        driveBase.turnDistance(0.19,0.4);
+        driveBase.driveDistance(0.95,-0.5);
+        driveBase.turnDistance((Math.PI)/2,0.2);
+        driveBase.driveDistance(0.4,0.8);
     }
 
     public void auto2(){
