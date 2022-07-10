@@ -54,7 +54,7 @@ public class Robot {
    private ArmState armState;
    private ClawState clawState;
    private SpinnerState spinnerState;
-   private DriveState driveState = DriveState.Arcade;
+   private DriveState driveState = DriveState.TankDrive;
 
     public Robot(OpMode opMode) {
        controller = opMode.gamepad2;
@@ -156,7 +156,7 @@ public class Robot {
                 arm.setArmMotor(ARM.ARM_MOVE_DOWN);
                 break;
             case HOLD:
-                arm.setArmMotor(-0.1);
+                arm.setArmMotor(ARM.ARM_HOLD);
                 break;
             case LEAVE_OTHER_SIDE:
                 arm.setArmMotor(1);

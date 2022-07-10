@@ -49,8 +49,10 @@ public class DriveBase {
    public void drive(double left, double right, boolean boost) {
        if(boost){
            driveAll(right, right, left, left);
+           telemetry.addData("Right - Left: ", String.valueOf(right), String.valueOf(left));
        } else {
            driveAll(right*0.8, right*0.8, left*0.8, left*0.8);
+           telemetry.addData("Right - Left: ", String.valueOf(right), String.valueOf(left));
        }
 
    }

@@ -19,6 +19,7 @@ public class Constants {
 
         public static final double ARM_MOVE_UP = -1;
         public static final double ARM_MOVE_DOWN = 0.3;
+        public static final double ARM_HOLD = -0.1;
 
         public static final double CLAW_OPEN = 0.5;
         public static final double CLAW_CLOSE = -0.5;
