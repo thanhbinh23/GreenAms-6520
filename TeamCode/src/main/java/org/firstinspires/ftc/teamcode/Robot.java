@@ -57,8 +57,8 @@ public class Robot {
    private DriveState driveState = DriveState.Arcade;
 
     public Robot(OpMode opMode) {
-       controller = opMode.gamepad1;
-       gamepad = opMode.gamepad2;
+       controller = opMode.gamepad2;
+       gamepad = opMode.gamepad1;
 
        arm = new Arm(opMode);
        driveBase = new DriveBase(opMode);
@@ -117,10 +117,13 @@ public class Robot {
 
         if(gamepad.right_trigger != 0){
             spinnerState = SpinnerState.SPIN_RIGHT;
+            telemetry.addData("Trigger Right:", gamepad.right_trigger);
         } else if (gamepad.left_trigger != 0) {
             spinnerState = SpinnerState.SPIN_LEFT;
+            telemetry.addData("Trigger left: ", gamepad.left_trigger);
         } else {
             spinnerState = SpinnerState.SPIN_IDLE;
+            telemetry.addData("IDLE", 0);
         }
 
        switch (driveState){
@@ -153,7 +156,7 @@ public class Robot {
                 arm.setArmMotor(ARM.ARM_MOVE_DOWN);
                 break;
             case HOLD:
-                arm.setArmMotor(-0.3);
+                arm.setArmMotor(-0.1);
                 break;
             case LEAVE_OTHER_SIDE:
                 arm.setArmMotor(1);
@@ -174,10 +177,10 @@ public class Robot {
 
         switch (spinnerState){
             case SPIN_RIGHT:
-                spinner.spin(gamepad.left_trigger);
+                spinner.spin(-gamepad.right_trigger);
                 break;
             case SPIN_LEFT:
-                spinner.spin(gamepad.right_trigger);
+                spinner.spin(gamepad.left_trigger);
                 break;
             case SPIN_IDLE:
                 spinner.spin(0);

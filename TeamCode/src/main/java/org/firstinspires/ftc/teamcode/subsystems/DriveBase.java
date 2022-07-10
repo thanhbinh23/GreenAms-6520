@@ -33,8 +33,8 @@ public class DriveBase {
        leftMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
        leftFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-       rightFollow.setDirection(DcMotorSimple.Direction.REVERSE);
-       rightMaster.setDirection(DcMotorSimple.Direction.REVERSE);
+       leftFollow.setDirection(DcMotorSimple.Direction.REVERSE);
+       leftMaster.setDirection(DcMotorSimple.Direction.REVERSE);
    }
 
    public void driveAll(double rightMasterSpeed, double rightFollowerSpeed, double leftMasterSpeed, double leftFollowerSpeed) {
@@ -59,15 +59,25 @@ public class DriveBase {
         drive(left, right, true);
     }
 
+    private double mappingDeadZone(double input){
+       double absoluteValue = Math.abs(input);
+       double sign = Math.signum(input);
+       double max = Math.max(0, absoluteValue-0.1);
+       return max*1.1111111111*sign;
+    }
+
     //the amount of power to each motor when joystick is fully to one side
     public static final double turnGoal = 0.4;
     public static final double forwardGoal = 0.6;
     public void driveArcade(double forwardPower, double turnPower){
+       double tp = mappingDeadZone(turnPower);
+       double fp = mappingDeadZone(forwardPower);
+
        double turnPart = turnPower*turnGoal;
        double forwardPart = forwardPower*forwardGoal;
        double L = forwardPart - turnPart;
        double R = forwardPart + turnPart;                     
-       drive(L,R);
+       drive(L,(R));
 
     }
 
