@@ -60,8 +60,8 @@ public class DriveBase {
     }
 
     //the amount of power to each motor when joystick is fully to one side
-    public static final double turnGoal = 0.3;
-    public static final double forwardGoal = 0.7;
+    public static final double turnGoal = 0.4;
+    public static final double forwardGoal = 0.6;
     public void driveArcade(double forwardPower, double turnPower){
        double turnPart = turnPower*turnGoal;
        double forwardPart = forwardPower*forwardGoal;

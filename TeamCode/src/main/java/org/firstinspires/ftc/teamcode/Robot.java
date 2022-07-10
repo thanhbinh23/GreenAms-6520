@@ -39,7 +39,6 @@ public class Robot {
    private final Telemetry telemetry;
    private DriveState driveState = DriveState.Arcade;
 
-   private final double maxspeed = 0.8;
    private Arm arm;
    private Gamepad gamepad;
    private int threshold = -125;
@@ -86,10 +85,10 @@ public class Robot {
         }
 
         if(gamepad.dpad_down){
-            if (arm.getArmPosition()*ARM.TICKS_TO_DEGREE < threshold){
-                armState = ArmState.DOWN;
-            } else {
+            if (gamepad.right_bumper){
                 armState = ArmState.LEAVE_OTHER_SIDE;
+            } else {
+                armState = ArmState.DOWN;
             }
         } else if (gamepad.dpad_up) {
             armState = ArmState.UP;
