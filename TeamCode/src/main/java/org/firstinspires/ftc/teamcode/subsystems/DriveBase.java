@@ -115,7 +115,13 @@ public class DriveBase {
         rightMaster.setPower(powerToDrive);
         rightFollow.setPower(powerToDrive);
 
-        while(isBusy());
+        while(isBusy()) {
+            telemetry.addData("LeftPosition", leftMaster.getCurrentPosition());
+            telemetry.addData("RightPosition", rightMaster.getCurrentPosition());
+            telemetry.addData("Left Target", leftMaster.getTargetPosition());
+            telemetry.addData("Right Position", rightMaster.getTargetPosition());
+            telemetry.update();
+        }
 
     }
     public boolean isBusy(){
