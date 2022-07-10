@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Robot;
 import static org.firstinspires.ftc.teamcode.Constants.AUTONOMOUS.*;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="...")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="autoForTheWinner")
 public class Autonomous extends LinearOpMode{
     private Robot robot;
 
@@ -18,6 +18,6 @@ public class Autonomous extends LinearOpMode{
         waitForStart();
         robot = Robot.getInstance(this);
         robot.init();
-        robot.auto();
+        robot.auto1();
     }
 }

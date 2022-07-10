@@ -112,8 +112,8 @@ public class DriveBase {
 
         leftMaster.setPower(powerToDrive);
         leftFollow.setPower(powerToDrive);
-        rightMaster.setPower(-powerToDrive);
-        rightFollow.setPower(-powerToDrive);
+        rightMaster.setPower(powerToDrive);
+        rightFollow.setPower(powerToDrive);
 
         while(isBusy());
 

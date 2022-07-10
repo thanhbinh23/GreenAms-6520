@@ -42,7 +42,7 @@ public class Robot {
        telemetry = opMode.telemetry;
     }
 
-    public void auto() {
+    public void auto1() {
        driveBase.driveDistance(0.3, 0.5);
        driveBase.turnDistance(56.4,-0.5);
        driveBase.driveDistance(Math.sqrt(40*40+60*60),0.5);
@@ -52,9 +52,19 @@ public class Robot {
        driveBase.driveDistance(1.2,0.8);
    }
 
+   public void auto2(){
+       driveBase.turnDistance(90,-0.5);
+       driveBase.driveDistance(0.3,0.5);
+       driveBase.turnDistance(135,0.5);
+       driveBase.driveDistance(1,0.5);
+       driveBase.turnDistance(45,0.5);
+       driveBase.driveDistance(2,0.8);
+   }
+
    public void init() {
        driveBase.init();
    }
+
 
    public void start() {
 
