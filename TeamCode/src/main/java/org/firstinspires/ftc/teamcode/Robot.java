@@ -96,13 +96,17 @@ public class Robot {
     public void blueAllianceRight() {
         driveBase.driveDistance(0.15, 0.5);
         driveBase.turnDistance(-0.98,0.4);
-        turret.TurretTurnAngle(Math.PI*0.78,0.65);
+        turret.TurretTurnAngle(Math.PI*0.75,0.65);
         //while(turret.isBusy());
-        arm.ArmMoving(-Math.PI/6, 0.6);
+        arm.ArmMoving(-Math.PI/7, 0.6);
         while (arm.isArmBusy());
         driveBase.driveDistance(0.24,0.5);
-        while(driveBase.isBusy() && arm.isTurretBusy());
-        arm.setClawMotorWithdistance(-600,-0.7);
+        while(driveBase.isBusy() && turret.isTurretBusy());
+        arm.setClawMotorWithdistance(-600,-0.30);
+        driveBase.turnDistance(-Math.PI/7,0.7);
+        driveBase.driveDistance(-1.4,1);
+        turret.TurretTurnAngle(-Math.PI*0.7,0.7);
+        while(turret.isTurretBusy());
 
 
 //        driveBase.driveDistance(0.3,0.5);
@@ -133,14 +137,17 @@ public class Robot {
 
     public void blueAllianceLeft(){
         driveBase.driveDistance(0.15, 0.5);
-        driveBase.turnDistance(0.98,0.4);
-        turret.TurretTurnAngle(2*Math.PI-Math.PI*0.78,0.65);
-        //while(turret.isBusy());
+        driveBase.turnDistance(0.9,0.4);
         arm.ArmMoving(-Math.PI/6, 0.6);
         while (arm.isArmBusy());
+        turret.TurretTurnAngle(Math.PI*0.73,0.65);
+        //while(turret.isBusy());
+        while (turret.isTurretBusy());
         driveBase.driveDistance(0.24,0.5);
         while(driveBase.isBusy() && arm.isTurretBusy());
-        arm.setClawMotorWithdistance(-600,-0.7);
+        arm.setClawMotorWithdistance(-600,-0.5);
+
+        driveBase.driveDistance(-0.8,0.95);
 
     }
 //        driveBase.driveDistance(0.15, 0.5);
