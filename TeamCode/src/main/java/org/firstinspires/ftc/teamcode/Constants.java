@@ -30,6 +30,7 @@ public class Constants {
             public static final double CLAW_CLOSE = -0.5;
 
             public static final double TICKS_TO_DEGREE = 864.0/364;
+            public static final double CORE_HEX_TICKS_TO_RADIAN = 288*5/(2*Math.PI);
         }
 
         public static final class SPINNER {

@@ -13,6 +13,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
         import static org.firstinspires.ftc.teamcode.Constants.AUTONOMOUS.*;
 
         import org.firstinspires.ftc.robotcore.external.Telemetry;
+        import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class DriveBase {
     private DcMotorEx rightMaster, rightFollow, leftMaster, leftFollow;
@@ -136,10 +137,13 @@ public class DriveBase {
             telemetry.addData("Right Position", rightMaster.getTargetPosition());
             telemetry.update();
         }
-
     }
+
+    public double getPosition (){
+        return leftFollow.getCurrentPosition();
+    }
+
     public boolean isBusy(){
         return leftFollow.isBusy() || leftMaster.isBusy() || rightFollow.isBusy() || rightMaster.getPowerFloat();
     }
-
 }
