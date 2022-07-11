@@ -1,17 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
-        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.subsystems.DriveBase;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
-
-import org.firstinspires.ftc.teamcode.Constants.ARM;
+import org.firstinspires.ftc.teamcode.subsystems.DriveBase;
 import org.firstinspires.ftc.teamcode.subsystems.Spinner;
 
-enum DriveState{
+enum DriveState {
     Arcade,
     TankDrive
 }
@@ -41,49 +38,23 @@ enum SpinnerState {
     SPIN_IDLE
 }
 
-enum TurretState {
-    LEFT,
-    RIGHT,
-    STATIONARY
-}
-
-enum ArmState {
-    UP,
-    DOWN,
-    HOLD,
-    LEAVE_OTHER_SIDE
-}
-
-enum ClawState {
-    OPEN,
-    CLOSE,
-    HOLD
-}
-
-enum SpinnerState {
-    SPIN_LEFT,
-    SPIN_RIGHT,
-    SPIN_IDLE
-}
 
 public class Robot {
-    private  Gamepad controller, gamepad;
-    private  Telemetry telemetry;
-    private OpMode opMode;
-
+    private static Robot instance;
     private final DriveBase driveBase;
     private final Spinner spinner;
-    private Arm arm;
-    private Arm turret; //check class if correct
-
-    private int threshold = -125;
-
+    private final Gamepad gamepad;
+    private final OpMode opMode;
+    private final Arm arm;
+    private final Arm turret; //check class if correct
+    private final int threshold = -125;
+    private Gamepad controller;
+    private Telemetry telemetry;
     private TurretState turretState;
     private ArmState armState;
     private ClawState clawState;
     private SpinnerState spinnerState;
     private DriveState driveState = DriveState.Arcade;
-    private static Robot instance;
 
     public Robot(OpMode opMode) {
         controller = opMode.gamepad1;
@@ -99,14 +70,17 @@ public class Robot {
     }
 
     public static Robot getInstance(OpMode opMode) {
-        if(instance == null){
-            instance = new Robot(opMode);}
+        if (instance == null) {
+            instance = new Robot(opMode);
+        }
         instance.setup(opMode);
         return instance;
     }
-    public void setup(OpMode opMode){
+
+    public void setup(OpMode opMode) {
         controller = opMode.gamepad1;
-        telemetry = opMode.telemetry;}
+        telemetry = opMode.telemetry;
+    }
 
     public void init() {
         driveBase.init();
@@ -121,62 +95,59 @@ public class Robot {
 
     public void redAllianceRight() {
         driveBase.driveDistance(0.15, 0.5);
-        driveBase.turnDistance(-0.98,0.4);
-        turret.TurretTurnAngle(Math.PI*0.75,0.65);
+        driveBase.turnDistance(-0.98, 0.4);
+        turret.TurretTurnAngle(Math.PI * 0.75, 0.65);
         //while(turret.isBusy());
-        arm.ArmMoving(-Math.PI/7, 0.6);
-        while (arm.isArmBusy());
-        driveBase.driveDistance(0.24,0.5);
-        while(driveBase.isBusy() && turret.isTurretBusy());
-        arm.setClawMotorWithdistance(-600,-0.30);
-        driveBase.turnDistance(-Math.PI/7,0.7);
-        driveBase.driveDistance(-1.4,1);
-        turret.TurretTurnAngle(-Math.PI*0.7,0.7);
-        while(turret.isTurretBusy());
+        arm.ArmMoving(-Math.PI / 7, 0.6);
+        while (arm.isArmBusy()) ;
+        driveBase.driveDistance(0.24, 0.5);
+        while (driveBase.isBusy() && turret.isTurretBusy()) ;
+        arm.setClawMotorWithdistance(-600, -0.30);
+        driveBase.turnDistance(-Math.PI / 7, 0.7);
+        driveBase.driveDistance(-1.4, 1);
+        turret.TurretTurnAngle(-Math.PI * 0.7, 0.7);
+        while (turret.isTurretBusy()) ;
 
 
     }
 
-    public void blueAllianceLeft(){
+    public void blueAllianceLeft() {
         driveBase.driveDistance(0.15, 0.5);
-        driveBase.turnDistance(0.98,0.4);
-        arm.ArmMoving(-Math.PI/7, 0.6);
-        while (arm.isArmBusy());
-        turret.TurretTurnAngle(Math.PI*0.73,0.65);
+        driveBase.turnDistance(0.98, 0.4);
+        arm.ArmMoving(-Math.PI / 7, 0.6);
+        while (arm.isArmBusy()) ;
+        turret.TurretTurnAngle(Math.PI * 0.73, 0.65);
         //while(turret.isBusy());
-        while (turret.isTurretBusy());
-        driveBase.driveDistance(0.24,0.5);
-        while(driveBase.isBusy() && turret.isTurretBusy());
-        arm.setClawMotorWithdistance(-600,-0.3);
-        driveBase.turnDistance(Math.PI/7,0.7);
-        driveBase.driveDistance(-1.4,1);
-        turret.TurretTurnAngle(-Math.PI*0.65,0.7);
-        while(turret.isTurretBusy());
-
-
-
+        while (turret.isTurretBusy()) ;
+        driveBase.driveDistance(0.24, 0.5);
+        while (driveBase.isBusy() && turret.isTurretBusy()) ;
+        arm.setClawMotorWithdistance(-600, -0.3);
+        driveBase.turnDistance(Math.PI / 7, 0.7);
+        driveBase.driveDistance(-1.4, 1);
+        turret.TurretTurnAngle(-Math.PI * 0.65, 0.7);
+        while (turret.isTurretBusy()) ;
     }
-//    }
+
     public void teleop() {
 
-        if(controller.options){
-            if(driveState == DriveState.TankDrive){
+        if (controller.options) {
+            if (driveState == DriveState.TankDrive) {
                 driveState = DriveState.Arcade;
             } else {
                 driveState = DriveState.TankDrive;
             }
         }
 
-        if(gamepad.dpad_left){
+        if (gamepad.dpad_left) {
             turretState = TurretState.LEFT;
-        } else if (gamepad.dpad_right){
+        } else if (gamepad.dpad_right) {
             turretState = TurretState.RIGHT;
         } else {
             turretState = TurretState.STATIONARY;
         }
 
-        if(gamepad.dpad_down){
-            if (gamepad.right_bumper){
+        if (gamepad.dpad_down) {
+            if (gamepad.right_bumper) {
                 armState = ArmState.LEAVE_OTHER_SIDE;
             } else {
                 armState = ArmState.DOWN;
@@ -187,15 +158,15 @@ public class Robot {
             armState = ArmState.HOLD;
         }
 
-        if(gamepad.square){
+        if (gamepad.square) {
             clawState = ClawState.OPEN;
         } else if (gamepad.circle) {
-            clawState = clawState.CLOSE;
+            clawState = ClawState.CLOSE;
         } else {
-            clawState = clawState.HOLD;
+            clawState = ClawState.HOLD;
         }
 
-        if(gamepad.right_trigger != 0){
+        if (gamepad.right_trigger != 0) {
             spinnerState = SpinnerState.SPIN_RIGHT;
         } else if (gamepad.left_trigger != 0) {
             spinnerState = SpinnerState.SPIN_LEFT;
@@ -203,7 +174,7 @@ public class Robot {
             spinnerState = SpinnerState.SPIN_IDLE;
         }
 
-        switch (driveState){
+        switch (driveState) {
             case TankDrive:
                 driveBase.drive(controller.left_stick_y, controller.right_stick_y, controller.left_bumper);
                 break;
@@ -213,7 +184,7 @@ public class Robot {
                 break;
         }
 
-        switch(turretState){
+        switch (turretState) {
             case LEFT:
                 arm.setTurretMotor(Constants.ARM.TURRET_MOVE_LEFT);
                 break;
@@ -225,7 +196,7 @@ public class Robot {
                 break;
         }
 
-        switch (armState){
+        switch (armState) {
             case UP:
                 arm.setArmMotor(Constants.ARM.ARM_MOVE_UP);
                 break;
@@ -252,7 +223,7 @@ public class Robot {
                 break;
         }
 
-        switch (spinnerState){
+        switch (spinnerState) {
             case SPIN_RIGHT:
                 spinner.spin(gamepad.left_trigger);
                 break;

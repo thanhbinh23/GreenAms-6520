@@ -8,7 +8,7 @@ public class Constants {
         public static final String LEFTFOLLOW = "lf";
         public static final double d = 0.28;
     }
-    
+
     public static final class ARM {
         public static final String TURRET_MOTOR_ID = "Turret";
         public static final String ROTATE_MOTOR_ID = "Rotate";
@@ -24,23 +24,25 @@ public class Constants {
         public static final double CLAW_OPEN = 0.5;
         public static final double CLAW_CLOSE = -0.5;
 
-        public static final double TICKS_TO_DEGREE = 864.0/364;
+        public static final double TICKS_TO_DEGREE = 864.0 / 364;
     }
 
     public static final class SPINNER {
         public static final String SPINNER_ID = "Spinner";
     }
-    public static final class AUTONOMOUS{
-        public static final double wheelDiameter = 0.09;
-        public static final double ticksPerMeter = 336/(Math.PI* wheelDiameter);
 
-    public static final class MOTOR {
+    public static final class AUTONOMOUS {
+        public static final double wheelDiameter = 0.09;
+        public static final double ticksPerMeter = 336 / (Math.PI * wheelDiameter);
+
+        public static final class MOTOR {
             public static final String RIGHTMASTER = "rm";
             public static final String RIGHTFOLLOW = "rf";
             public static final String LEFTMASTER = "lm";
             public static final String LEFTFOLLOW = "lf";
             public static final double d = 0.33;
         }
+
         public static final class ARM {
             public static final String TURRET_MOTOR_ID = "Turret";
             public static final String ROTATE_MOTOR_ID = "Rotate";
@@ -55,8 +57,8 @@ public class Constants {
             public static final double CLAW_OPEN = 0.5;
             public static final double CLAW_CLOSE = -0.5;
 
-            public static final double TICKS_TO_DEGREE = 864.0/364;
-            public static final double CORE_HEX_TICKS_TO_RADIAN = 288*5/(2*Math.PI);
+            public static final double TICKS_TO_DEGREE = 864.0 / 364;
+            public static final double CORE_HEX_TICKS_TO_RADIAN = 288 * 5 / (2 * Math.PI);
         }
 
         public static final class SPINNER {

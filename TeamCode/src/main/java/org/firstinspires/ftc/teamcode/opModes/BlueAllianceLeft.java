@@ -5,10 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Robot;
 
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="blueAllianceLeft")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "blueAllianceLeft")
 public class BlueAllianceLeft extends LinearOpMode {
     private Robot robot;
-
 
 
     @Override
@@ -17,4 +16,5 @@ public class BlueAllianceLeft extends LinearOpMode {
         robot = Robot.getInstance(this);
         robot.init();
         robot.blueAllianceLeft();
-    }}
+    }
+}
