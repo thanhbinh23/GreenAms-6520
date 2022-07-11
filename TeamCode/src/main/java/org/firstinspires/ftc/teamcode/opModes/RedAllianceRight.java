@@ -1,12 +1,11 @@
 package org.firstinspires.ftc.teamcode.opModes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
-@Autonomous(name="redAllianceLeft")
-public class RedAllianceLeft extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="redAllianceRight")
+public class RedAllianceRight extends LinearOpMode{
     private Robot robot;
 
 
@@ -16,6 +15,8 @@ public class RedAllianceLeft extends LinearOpMode {
         waitForStart();
         robot = Robot.getInstance(this);
         robot.init();
-        robot.redAllianceLeft();
+        robot.redAllianceRight();
     }
 }
+
+

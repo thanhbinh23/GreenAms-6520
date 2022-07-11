@@ -93,7 +93,7 @@ public class Robot {
         telemetry.addData("GART", 99999);
     }
 
-    public void blueAllianceRight() {
+    public void redAllianceRight() {
         driveBase.driveDistance(0.15, 0.5);
         driveBase.turnDistance(-0.98,0.4);
         turret.TurretTurnAngle(Math.PI*0.75,0.65);
@@ -109,82 +109,28 @@ public class Robot {
         while(turret.isTurretBusy());
 
 
-//        driveBase.driveDistance(0.3,0.5);
-//        driveBase.turnDistance(-0.19,0.4);
-//        driveBase.driveDistance(-0.8,0.25);
-//        spinner.spinAuto(3,0.5);
-//        driveBase.turnDistance((Math.PI)/2,0.3);
-//        driveBase.driveDistance(0.4,0.8);
-    }
-    public void redAllianceLeft(){
-        driveBase.driveDistance(0.15, 0.5);
-        driveBase.turnDistance(0.98,0.4);
-        turret.TurretTurnAngle(Math.PI,0.7);
-        while(turret.isTurretBusy());
-        arm.ArmMoving(Math.PI, 0.6);
-        while(driveBase.getPosition()<0.1* Constants.AUTONOMOUS.ticksPerMeter){
-            arm.setArmMotor(-0.1);
-            driveBase.driveDistance(0.02,0.3);
-        }
-
-//        driveBase.driveDistance(0.3,0.5);
-        driveBase.turnDistance(0.19,0.4);
-        driveBase.driveDistance(-0.8,0.5);
-        spinner.spinAuto(3,0.5);
-        driveBase.turnDistance((Math.PI)/2,0.3);
-        driveBase.driveDistance(0.4,0.8);
     }
 
     public void blueAllianceLeft(){
         driveBase.driveDistance(0.15, 0.5);
-        driveBase.turnDistance(0.9,0.4);
-        arm.ArmMoving(-Math.PI/6, 0.6);
+        driveBase.turnDistance(0.98,0.4);
+        arm.ArmMoving(-Math.PI/7, 0.6);
         while (arm.isArmBusy());
         turret.TurretTurnAngle(Math.PI*0.73,0.65);
         //while(turret.isBusy());
         while (turret.isTurretBusy());
         driveBase.driveDistance(0.24,0.5);
-        while(driveBase.isBusy() && arm.isTurretBusy());
-        arm.setClawMotorWithdistance(-600,-0.5);
-
-        driveBase.driveDistance(-0.8,0.95);
-
-    }
-//        driveBase.driveDistance(0.15, 0.5);
-//        driveBase.turnDistance(0.98,0.4);
-//        turret.TurretTurnAngle(Math.PI,0.7);
-//        while(turret.isTurretBusy());
-//        arm.ArmMoving(Math.PI, 0.6);
-//        while(driveBase.getPosition()<0.1* Constants.AUTONOMOUS.ticksPerMeter){
-//            arm.setArmMotor(-0.1);
-//            driveBase.driveDistance(0.02,0.3);
-//        }
-//     //   arm.setClawMotorWithTime(0.7,0.4);
-//
-//
-//        driveBase.turnDistance(-3.3, 0.5);
-//        driveBase.driveDistance(0.7,0.5);
-////        driveBase.turnDistance(135,0.5);
-////        driveBase.driveDistance(1,0.5);
-////        driveBase.turnDistance(45,0.5);
-////        driveBase.driveDistance(2,0.8);
-//    }
-    public void redAllianceRight(){
-        driveBase.driveDistance(0.15, 0.5);
-        driveBase.turnDistance(-0.98,0.4);
-        turret.TurretTurnAngle(Math.PI,0.7);
+        while(driveBase.isBusy() && turret.isTurretBusy());
+        arm.setClawMotorWithdistance(-600,-0.3);
+        driveBase.turnDistance(Math.PI/7,0.7);
+        driveBase.driveDistance(-1.4,1);
+        turret.TurretTurnAngle(-Math.PI*0.65,0.7);
         while(turret.isTurretBusy());
-        arm.ArmMoving(Math.PI, 0.6);
-        while(driveBase.getPosition()<0.1* Constants.AUTONOMOUS.ticksPerMeter){
-            arm.setArmMotor(-0.1);
-            driveBase.driveDistance(0.02,0.3);
-        }
-      //  arm.setClawMotorWithTime(0.7,0.4);
 
-        driveBase.turnDistance(3.3, 0.5);
-        driveBase.driveDistance(0.7,0.5);
+
 
     }
+//    }
     public void teleop() {
 
         if(controller.options){
