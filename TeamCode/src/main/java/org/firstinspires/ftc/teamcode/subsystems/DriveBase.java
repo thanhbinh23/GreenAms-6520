@@ -1,51 +1,55 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+        import com.qualcomm.robotcore.hardware.DcMotorEx;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.DcMotorSimple;
+        import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import static org.firstinspires.ftc.teamcode.Constants.*;
+        import static org.firstinspires.ftc.teamcode.Constants.*;
+        import static org.firstinspires.ftc.teamcode.Constants.AUTONOMOUS.*;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+        import org.firstinspires.ftc.robotcore.external.Telemetry;
+        import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class DriveBase {
-   private DcMotor rightMaster, rightFollow, leftMaster, leftFollow;
+    private DcMotorEx rightMaster, rightFollow, leftMaster, leftFollow;
 
-   private Telemetry telemetry;
-   private HardwareMap hardwareMap;
+    private Telemetry telemetry;
+    private HardwareMap hardwareMap;
 
-   public DriveBase(OpMode opMode) {
-       this.telemetry = opMode.telemetry;
-       this.hardwareMap = opMode.hardwareMap;
-   }
+    public DriveBase(OpMode opMode) {
+        this.telemetry = opMode.telemetry;
+        this.hardwareMap = opMode.hardwareMap;
+    }
 
-   public void init() {
+    public void init() {
 
-       rightMaster = hardwareMap.dcMotor.get("rm");
-       rightFollow = hardwareMap.dcMotor.get("rf");
-       leftMaster = hardwareMap.dcMotor.get( "lm");
-       leftFollow = hardwareMap.dcMotor.get( "lf");
+        rightMaster = (DcMotorEx) hardwareMap.dcMotor.get("rm");
+        rightFollow = (DcMotorEx) hardwareMap.dcMotor.get("rf");
+        leftMaster = (DcMotorEx) hardwareMap.dcMotor.get( "lm");
+        leftFollow = (DcMotorEx) hardwareMap.dcMotor.get( "lf");
 
-       rightMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       rightFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       leftMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       leftFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftMaster.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFollow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
        leftFollow.setDirection(DcMotorSimple.Direction.REVERSE);
        leftMaster.setDirection(DcMotorSimple.Direction.REVERSE);
-   }
 
-   public void driveAll(double rightMasterSpeed, double rightFollowerSpeed, double leftMasterSpeed, double leftFollowerSpeed) {
-       rightMaster.setPower(rightMasterSpeed);
-       rightFollow.setPower(rightFollowerSpeed);
-       leftMaster.setPower(leftMasterSpeed);
-       leftFollow.setPower(leftFollowerSpeed);
+        rightMaster.setTargetPositionTolerance((int) (0.025*ticksPerMeter));
+        leftFollow.setTargetPositionTolerance((int) (0.025*ticksPerMeter));
+        rightFollow.setTargetPositionTolerance((int) (0.025*ticksPerMeter));
+        leftMaster.setTargetPositionTolerance((int) (0.025*ticksPerMeter));
+    }
 
-       //telemetry.addData("rightMaster, rightFollow, leftMaster, leftFollow", "%.1 %.1 %.1 %.1", rightMasterSpeed, rightFollowerSpeed, leftMasterSpeed, leftFollowerSpeed);
-   }
-
+    public void driveAll(double rightMasterSpeed, double rightFollowerSpeed, double leftMasterSpeed, double leftFollowerSpeed) {
+        rightMaster.setPower(rightMasterSpeed);
+        rightFollow.setPower(rightFollowerSpeed);
+        leftMaster.setPower(leftMasterSpeed);
+        leftFollow.setPower(leftFollowerSpeed);
+    }
    public void drive(double left, double right, boolean boost) {
        if(boost){
            driveAll(right, right, left, left);
@@ -54,12 +58,7 @@ public class DriveBase {
            driveAll(right*0.8, right*0.8, left*0.8, left*0.8);
            telemetry.addData("Right - Left: ", String.valueOf(right), String.valueOf(left));
        }
-
    }
-
-    public void drive(double left, double right) {
-        drive(left, right, true);
-    }
 
     private double mappingDeadZone(double input){
        double absoluteValue = Math.abs(input);
@@ -84,4 +83,3 @@ public class DriveBase {
     }
 
 }
-
